@@ -1,4 +1,4 @@
-# Aprendendo a Codar React por aulas da Alluera
+# Aprendendo a Codar React por aulas da Allura
 
 - Lembrar de sempre colocar o export default "Nome da Função" no rodapé dos componentes para o mesmo ficar acessível no App.js
 - Lembrar de sempre importar os componentes
