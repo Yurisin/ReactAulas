@@ -24,12 +24,28 @@ const Subtitulo = styled.h2`
   font-weight: 500;
   margin-bottom: 40px;
 `
+const Resultado = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    margin-top: 50px;
+    cursor: pointer;
+    background:rgb(3, 75, 129);
+    p {
+        width: 200px;
+    }
+    img {
+        width: 100px;
+    }
+    &:hover {
+        border: 1px solid white;
+    }
+`
 
 
 function Pesquisa () {
   const [livrosPesquisados, setLivrosPesquisados] = useState([]);
-
-  console.log(livrosPesquisados);
 
   return (
     <PesquisaContainer>
@@ -39,11 +55,18 @@ function Pesquisa () {
         placeholder="Digite o nome do livro"
         onBlur={evento => {
           const textoDigitado = evento.target.value;
-          const resultadoPesquisa = livros.filter(livros => livros.nome.includes(textoDigitado)); 
+          const resultadoPesquisa = livros.filter(livro => livro.nome.toLowerCase().includes(textoDigitado.toLowerCase())); 
           setLivrosPesquisados(resultadoPesquisa);
+
 
         }}
       />
+      { livrosPesquisados.map(livro => (
+        <Resultado>
+          <img src={livro.src}/>  
+          <p>{livro.nome}</p>
+        </Resultado>
+      ) ) }
       
     </PesquisaContainer>
   )
