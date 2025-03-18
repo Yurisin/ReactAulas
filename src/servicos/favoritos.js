@@ -8,6 +8,26 @@ async function getFavoritos() {
  return response.data
 }
 
+async function postFavorito(id) {
+  try {
+    await favoritosAPI.post(`/${id}`);
+  } catch (error) {
+    console.error('Erro ao adicionar favorito: ', error);
+    throw error;
+  }
+}
+
+async function deleteFavorito(id) {
+  try {
+    await favoritosAPI.delete(`/${id}`);
+  } catch (error) {
+    console.error('Erro ao deletar favorito: ', error);
+    throw error;
+  }
+}
+
 export {
-  getFavoritos
+  getFavoritos,
+  postFavorito,
+  deleteFavorito
 }

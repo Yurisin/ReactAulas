@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import Input from '../Input';
 import { useEffect, useState } from 'react';
 import { getLivros } from '../../servicos/livros';
+import { postFavorito } from '../../servicos/favoritos';
 
 const PesquisaContainer = styled.section`
   background-image: linear-gradient(90deg, #002F52 35%, #326589 165%);
@@ -56,6 +57,16 @@ function Pesquisa () {
     setLivros(livrosDaAPI)
   }
 
+  async function insertFavorito(id) {
+    try {
+        await postFavorito(id);
+        alert(`O livro do id ${id} foi inserido com sucesso nos Favoritos`);
+    } catch (error) {
+        console.error('Houve um problema com a chamada postFavorito: ', error);
+        alert('Não foi possível adicionar o livro aos favoritos.');
+    }
+  }
+
   return (
     <PesquisaContainer>
       <Titulo>Já sabe por onde começar?</Titulo>
@@ -71,9 +82,8 @@ function Pesquisa () {
           setLivrosPesquisados(resultadoPesquisa);
         }}}
       />
-      { livrosPesquisados.map(livro => (
-        <Resultado>
-          <img src={livro.src}/>  
+      { livrosPesquisados.map( livro => (
+        <Resultado onClick={() => insertFavorito(livro.id)}>  
           <p>{livro.nome}</p>
         </Resultado>
       ) ) }

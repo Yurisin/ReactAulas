@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import livroImg from '../imagens/livro.png'
-import { getFavoritos } from '../servicos/favoritos';
+import { getFavoritos, deleteFavorito } from '../servicos/favoritos';
+
+
 
 const AppContainer = styled.div`
     width: 100vw;
@@ -51,6 +53,17 @@ function Favoritos() {
             setFavoritos(favoritosDaAPI)
         }
 
+    async function deletarFavorito(id){
+        try {
+            await deleteFavorito(id);
+            await fetchFavoritos();
+            alert(`Livro de id: ${id} deletado!`);
+        } catch (error) {
+            console.error('Erro ao deletar favorito: ', error);
+            alert('Não foi possível deletar o livro dos favoritos.');
+        }
+    }
+
         useEffect(() => {
             fetchFavoritos()
         }, [])
@@ -62,7 +75,7 @@ function Favoritos() {
        <ResultadoContainer>
          {
            favoritos.length !== 0 ? favoritos.map(favorito => (
-             <Resultado>
+             <Resultado onClick={() => deletarFavorito(favorito.id)}>
                <p>{favorito.nome}</p>
                <img src={livroImg}/>
              </Resultado>
